@@ -1,3 +1,6 @@
+import vectors.impl.FloatVArray;
+import vectors.impl.OldSchoolArray;
+
 import java.util.Random;
 
 //TIP To <b>Run</b> code, press <shortcut actionId="Run"/> or
@@ -22,13 +25,16 @@ public class Main {
 
     private static void generate_arrays_and_sum(int array_len) throws Exception {
         System.out.printf("running test for len: %,d%n", array_len);
-        float[] vec_a = generate_random_float_array(array_len);
-        float[] vec_b = generate_random_float_array(array_len);
-
+        float[] arr1 = generate_random_float_array(array_len);
+        float[] arr2 = generate_random_float_array(array_len);
+        FloatVArray vec_a = new FloatVArray(arr1);
+        FloatVArray vec_b = new FloatVArray(arr2);
+        OldSchoolArray normal_a = new OldSchoolArray(arr1);
+        OldSchoolArray normal_b = new OldSchoolArray(arr2);
         long startTime = System.currentTimeMillis();
-        var c = VectorLogic.addArray(vec_a, vec_b);
+        for(int i=0; i<100; i++) vec_a.multiply(vec_b);
         long midTime = System.currentTimeMillis();
-        var d = VectorLogic.addArrayOldSchool(vec_a, vec_b);
+        for(int i=0; i<100; i++) normal_a.multiply(normal_b);
         long endTime = System.currentTimeMillis();
         System.out.printf("SIMD way: %d%nold fashioned: %d%n%n", (midTime-startTime), (endTime-midTime));
     }
